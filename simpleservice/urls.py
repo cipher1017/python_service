@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from service import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('service/', include('service.urls')),
+    path('api/', include('service.urls')),
+    path('', views.index, name='index'),
+    path('login/', views.login, name='login'),
+    path('callback/', views.callback, name='callback'),
+    path('logout/', views.logout, name='logout'),
+    path('delivery-reports/', views.delivery_reports, name='delivery-reports'),
 
 ]

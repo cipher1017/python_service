@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+import africastalking
 from rest_framework import viewsets
 from .models import Customer, Order
 from .serializers import CustomerSerializer, OrderSerializer
@@ -10,8 +10,14 @@ from django.conf import settings
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from urllib.parse import urlencode, quote_plus
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+# Initialize Africa's Talking API
+africastalking.initialize('aft_sms', 'atsk_acaf9ec5e4e71903060ec8a34d9ac074f7cdb0383cbe81612a83f1f8fc85a04d052b38fb')
+sms = africastalking.SMS
+
+# OAuth configuration for Auth0
 oauth = OAuth()
 oauth.register(
     "auth0",
@@ -21,6 +27,7 @@ oauth.register(
     server_metadata_url=f"https://{settings.AUTH0_DOMAIN}/.well-known/openid-configuration",
 )
 
+# Authentication views
 def login(request):
     return oauth.auth0.authorize_redirect(request, request.build_absolute_uri(reverse("callback")))
 
@@ -49,6 +56,7 @@ def index(request):
         },
     )
 
+# ViewSets for Customer and Order
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -56,3 +64,25 @@ class CustomerViewSet(viewsets.ModelViewSet):
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+    def perform_create(self, serializer):
+        order = serializer.save()
+        customer = order.customer
+        message = f"Hi {customer.name}, your order for {order.item} worth ${order.amount} has been received. Thank you!"
+        self.send_sms(customer.phone_number, message)
+
+    def send_sms(self, recipient, message):
+        try:
+            response = sms.send(message, [recipient])
+            print(f"SMS sent successfully: {response}")
+        except Exception as e:
+            print(f"Error while sending SMS: {e}")
+
+# Delivery report callback
+@csrf_exempt
+def delivery_reports(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(f"Delivery report response: {data}")
+        return JsonResponse({'message': 'Delivery report received'}, status=200)
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
