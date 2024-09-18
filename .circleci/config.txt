@@ -12,3 +12,6 @@ workflows:
   heroku_deploy:
     jobs:
       - deploy
+run:
+  name: Set up Heroku credentials
+  command: echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com

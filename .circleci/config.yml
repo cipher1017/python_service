@@ -20,3 +20,6 @@ workflows:
     jobs:
       - deploy
 
+run:
+  name: Set up Heroku credentials
+  command: echo HRKU-9e0226fc-428e-47b8-8447-1b309bf46ac9 | docker login --username=_ --password-stdin registry.heroku.com
