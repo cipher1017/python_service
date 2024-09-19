@@ -12,7 +12,7 @@ class ApiTestCase(TestCase):
             'name': 'David',
             'address': '123 Main Street',
             'phone_number': '123-456-7890'
-        }, format='json')
+        }, format='json' )
         self.assertEqual(response.status_code, 201)
 
     def test_create_order(self):
