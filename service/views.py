@@ -47,14 +47,19 @@ def logout(request):
     )
 
 def index(request):
+    customers = Customer.objects.all().order_by('-id')[:10]  # Get last 10 customers
+    orders = Order.objects.all().order_by('-order_time')[:10]  # Get last 10 orders
     return render(
         request,
         "index.html",
         context={
             "session": request.session.get("user"),
             "pretty": json.dumps(request.session.get("user"), indent=4),
+            "customers": customers,
+            "orders": orders,
         },
     )
+
 
 # ViewSets for Customer and Order
 class CustomerViewSet(viewsets.ModelViewSet):
