@@ -13,10 +13,9 @@ workflows:
                 name: Run pre-deployment commands
                 command: |
                   echo "Pre-deployment steps"
-                  # Add any commands you want to run before deployment, e.g. tests
+                  # Add any commands you want to run before deployment
           post-steps:
             - run:
                 name: Run database migrations
                 command: |
                   heroku run python manage.py migrate --app pythonservice
-                  # Replace with any post-deployment steps you need, like database migrations
