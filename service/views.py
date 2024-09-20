@@ -14,7 +14,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 # Initialize Africa's Talking API
-africastalking.initialize('pythonservice', 'atsk_bb64be0220b36075dbc488a8a5b1fe09d74ce8be1c98369e2ace7c39e30d4d95b54a77bc')
+africastalking.initialize('sandbox', 'atsk_5deb26df875064c0c1a9e72bf56c5df2646f46614a0465f0c4909cbdb3ba583d3ca7f44a')
 sms = africastalking.SMS
 
 # OAuth configuration for Auth0
