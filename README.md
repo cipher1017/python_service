@@ -4,6 +4,7 @@ It also integrates authentication using OpenID Connect with Auth0 and sends SMS 
 The project is deployed on Heroku and follows a CI/CD pipeline using CircleCI.
 
 Features
+    
     REST API for Customers and Orders: Create, view, and manage customers and orders.
     Authentication: OpenID Connect (OIDC) via Auth0.
     SMS Notifications: Sends SMS alerts using Africa's Talking when an order is placed.
@@ -11,6 +12,7 @@ Features
     Deployed on Heroku.
 
 API Endpoints
+    
     Customers API:
         GET /api/customers/ - Get all customers
         POST /api/customers/ - Create a new customer
