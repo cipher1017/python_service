@@ -1,5 +1,7 @@
 Simple Python Service
-This project is a simple Python-based service that provides REST APIs for managing customers and orders. It also integrates authentication using OpenID Connect with Auth0 and sends SMS notifications to customers via Africa's Talking when new orders are created. The project is deployed on Heroku and follows a CI/CD pipeline using CircleCI.
+This project is a simple Python-based service that provides REST APIs for managing customers and orders. 
+It also integrates authentication using OpenID Connect with Auth0 and sends SMS notifications to customers via Africa's Talking when new orders are created. 
+The project is deployed on Heroku and follows a CI/CD pipeline using CircleCI.
 
 Features
     REST API for Customers and Orders: Create, view, and manage customers and orders.
