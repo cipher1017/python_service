@@ -87,7 +87,12 @@ class OrderViewSet(viewsets.ModelViewSet):
 @csrf_exempt
 def delivery_reports(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        print(f"Delivery report response: {data}")
-        return JsonResponse({'message': 'Delivery report received'}, status=200)
+        print(f"Raw request body: {request.body}")  # Log the raw body
+        try:
+            data = json.loads(request.body)
+            print(f"Delivery report response: {data}")
+            return JsonResponse({'message': 'Delivery report received'}, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
